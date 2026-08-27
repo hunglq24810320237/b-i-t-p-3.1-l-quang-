@@ -1,0 +1,264 @@
+using System;
+
+class Program
+{
+    // =========================
+    // BAI TAP 1: CALCULATOR
+    // =========================
+    static void Calculator()
+    {
+        Console.Clear();
+
+        Console.Write("Nhap a: ");
+        double a = double.Parse(Console.ReadLine());
+
+        Console.Write("Nhap b: ");
+        double b = double.Parse(Console.ReadLine());
+
+        Console.Write("Nhap phep toan: ");
+        char op = char.Parse(Console.ReadLine());
+
+        try
+        {
+            double kq = op switch
+            {
+                '+' => a + b,
+                '-' => a - b,
+                '*' => a * b,
+                '/' => a / b,
+                '%' => a % b,
+                _ => 0
+            };
+
+            if ((op == '/' || op == '%') && b == 0)
+                throw new DivideByZeroException();
+
+            Console.WriteLine($"Ket qua: {kq:F2}");
+        }
+        catch (DivideByZeroException)
+        {
+            Console.WriteLine("Loi: Khong the chia cho 0!");
+        }
+
+        Console.WriteLine("\nNhan phim bat ky de quay lai Menu...");
+        Console.ReadKey();
+    }
+
+
+    // =========================
+    // BAI TAP 2: PHUONG TRINH BAC 2
+    // =========================
+    static void PhuongTrinhBac2()
+    {
+        Console.Clear();
+
+        Console.Write("Nhap a: ");
+        double a = double.Parse(Console.ReadLine());
+
+        Console.Write("Nhap b: ");
+        double b = double.Parse(Console.ReadLine());
+
+        Console.Write("Nhap c: ");
+        double c = double.Parse(Console.ReadLine());
+
+        try
+        {
+            if (a == 0)
+            {
+                if (b == 0)
+                {
+                    if (c == 0)
+                        Console.WriteLine("Phuong trinh vo so nghiem.");
+                    else
+                        Console.WriteLine("Phuong trinh vo nghiem.");
+                }
+                else
+                {
+                    double x = -c / b;
+                    Console.WriteLine($"Nghiem x = {x:F2}");
+                }
+            }
+            else
+            {
+                double delta = b * b - 4 * a * c;
+
+                if (delta > 0)
+                {
+                    double x1 = (-b + Math.Sqrt(delta)) / (2 * a);
+                    double x2 = (-b - Math.Sqrt(delta)) / (2 * a);
+
+                    Console.WriteLine($"x1 = {x1:F2}");
+                    Console.WriteLine($"x2 = {x2:F2}");
+                }
+                else if (delta == 0)
+                {
+                    double x = -b / (2 * a);
+                    Console.WriteLine($"Nghiem kep x = {x:F2}");
+                }
+                else
+                {
+                    Console.WriteLine("Vo nghiem.");
+                }
+            }
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Loi: Du lieu nhap khong hop le!");
+        }
+
+        Console.WriteLine("\nNhan phim bat ky de quay lai Menu...");
+        Console.ReadKey();
+    }
+
+
+    // =========================
+    // BAI TAP 3: SO NGUYEN TO & FIBONACCI
+    // =========================
+    static bool IsPrime(int n)
+    {
+        if (n < 2)
+            return false;
+
+        for (int i = 2; i <= Math.Sqrt(n); i++)
+        {
+            if (n % i == 0)
+                return false;
+        }
+
+        return true;
+    }
+
+    static bool IsPerfectNumber(int n)
+    {
+        if (n <= 1)
+            return false;
+
+        int sum = 0;
+
+        for (int i = 1; i < n; i++)
+        {
+            if (n % i == 0)
+                sum += i;
+        }
+
+        return sum == n;
+    }
+
+    static void BaiTap3()
+    {
+        Console.Clear();
+
+        Console.Write("Nhap N: ");
+        int n = int.Parse(Console.ReadLine());
+
+        try
+        {
+            if (n <= 0)
+            {
+                Console.WriteLine("Loi: N phai la so nguyen duong!");
+            }
+            else
+            {
+                if (IsPrime(n))
+                    Console.WriteLine($"{n} la So nguyen to!");
+                else
+                    Console.WriteLine($"{n} KHONG la So nguyen to.");
+
+                if (IsPerfectNumber(n))
+                    Console.WriteLine($"{n} la So hoan hao!");
+                else
+                    Console.WriteLine($"{n} KHONG la So hoan hao.");
+
+                Console.Write($"Day Fibonacci {n} so: ");
+
+                int a = 0;
+                int b = 1;
+
+                for (int i = 0; i < n; i++)
+                {
+                    Console.Write(a);
+
+                    if (i < n - 1)
+                        Console.Write(", ");
+
+                    int c = a + b;
+                    a = b;
+                    b = c;
+                }
+
+                Console.WriteLine();
+            }
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Loi: Du lieu nhap khong hop le!");
+        }
+
+        Console.WriteLine("\nNhan phim bat ky de quay lai Menu...");
+        Console.ReadKey();
+    }
+
+
+    // =========================
+    // MENU CHINH
+    // =========================
+    static void Main()
+    {
+        int choice;
+
+        do
+        {
+            Console.Clear();
+
+            Console.WriteLine("======================================");
+            Console.WriteLine("          CHUONG TRINH MENU");
+            Console.WriteLine("======================================");
+            Console.WriteLine("1. Chay Bai tap 1 (Calculator)");
+            Console.WriteLine("2. Chay Bai tap 2 (Phuong trinh bac 2)");
+            Console.WriteLine("3. Chay Bai tap 3 (So nguyen to & Fibonacci)");
+            Console.WriteLine("0. Thoat chuong trinh");
+            Console.WriteLine("======================================");
+
+            Console.Write("Nhap lua chon: ");
+
+            try
+            {
+                choice = int.Parse(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        Calculator();
+                        break;
+
+                    case 2:
+                        PhuongTrinhBac2();
+                        break;
+
+                    case 3:
+                        BaiTap3();
+                        break;
+
+                    case 0:
+                        Console.Clear();
+                        Console.WriteLine("Cam on ban da su dung chuong trinh!");
+                        break;
+
+                    default:
+                        Console.WriteLine("Lua chon khong hop le!");
+                        Console.WriteLine("Nhan phim bat ky de tiep tuc...");
+                        Console.ReadKey();
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+                choice = -1;
+                Console.WriteLine("Loi: Vui long nhap so!");
+                Console.WriteLine("Nhan phim bat ky de tiep tuc...");
+                Console.ReadKey();
+            }
+
+        } while (choice != 0);
+    }
+}
