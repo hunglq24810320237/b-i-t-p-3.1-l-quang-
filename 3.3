@@ -1,0 +1,87 @@
+using System;
+
+class Program
+{
+    static bool IsPrime(int n)
+    {
+        if (n < 2)
+            return false;
+
+        for (int i = 2; i <= Math.Sqrt(n); i++)
+        {
+            if (n % i == 0)
+                return false;
+        }
+
+        return true;
+    }
+
+    static bool IsPerfectNumber(int n)
+    {
+        if (n <= 1)
+            return false;
+
+        int sum = 0;
+
+        for (int i = 1; i < n; i++)
+        {
+            if (n % i == 0)
+                sum += i;
+        }
+
+        return sum == n;
+    }
+
+    static void Main()
+    {
+        try
+        {
+            Console.Write("Nhap N: ");
+            int n = int.Parse(Console.ReadLine());
+
+            if (n <= 0)
+            {
+                Console.WriteLine("Loi: N phai la so nguyen duong!");
+                return;
+            }
+
+            // Kiem tra so nguyen to
+            if (IsPrime(n))
+                Console.WriteLine($"{n} la So nguyen to!");
+            else
+                Console.WriteLine($"{n} KHONG la So nguyen to.");
+
+            // Kiem tra so hoan hao
+            if (IsPerfectNumber(n))
+                Console.WriteLine($"{n} la So hoan hao!");
+            else
+                Console.WriteLine($"{n} KHONG la So hoan hao.");
+
+            // In N so Fibonacci dau tien
+            Console.Write($"Day Fibonacci {n} so: ");
+
+            int a = 0;
+            int b = 1;
+
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write(a);
+
+                if (i < n - 1)
+                    Console.Write(", ");
+
+                int c = a + b;
+                a = b;
+                b = c;
+            }
+
+            Console.WriteLine();
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Loi: Du lieu nhap khong hop le!");
+        }
+    }
+}
+
+
